@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="kr">
+    <head>
+        <meta charset="UTF-8">
+        <title>김수지</title>
+        <script type="text/javascript" src="js/jquery-1.11.3.js"></script>
+        <style type="text/css">
+            .screen { position: fixed; left:50%; top:50%; }
+            .screen div { position: absolute; }
+            .screen .content1 { background: url("images/content1.png"); width: 4704px; height: 4704px;}
+            .screen .content2 { background: url("images/content2.png"); width: 2235px; height: 2235px;}
+            .screen .content3 { background: url("images/content3.png"); width: 1683px; height: 1683px;}
+            nav { position: fixed; left: 20px; }
+            nav div { width: 130px; height: 30px; background: #fa9a82; float: left; margin: 5px; color:#fff; text-align: center; padding-top: 5px;}
+            nav .on {background: #dc702b;}
+            nav div:hover {background-color: #dc702b;}
+            .logo {position: fixed; right: 20px; }
+        </style>
+    </head>
+    <body>
+        <div class="screen">
+            <div class="content3"></div>
+            <div class="content2"></div>
+            <div class="content1"></div>
+        </div>
+
+        <nav class="boxes">
+            <div onclick="change(0)">
+                hola mexico
+            </div>
+            <div onclick="change(1)">
+                million seller
+            </div>
+            <div onclick="change(2)">
+                double dounts
+            </div>
+            <div onclick="change(3)">
+                coffee dounts
+            </div>
+        </nav>
+
+        <div class="logo">
+            <img src="images/logo.png" alt="img" title="img">
+        </div>
+
+        <script type="text/javascript">
+            var positions, init, change, content1, content3, content2, scr, body;
+
+            content1 = document.querySelectorAll(".screen .content1")[0];
+            content3 = document.querySelectorAll(".screen .content3")[0];
+            content2 = document.querySelectorAll(".screen .content2")[0];
+            scr = document.querySelectorAll(".screen")[0];
+
+            body = document.body;
+            positions = [
+                {left:609, top:707},
+                {left:576, top:2736},    
+                
+                {left:2700, top:973},
+                {left:3005, top:2691}
+            ];
+
+            init = function(idx) {
+                var position;
+                position = positions[idx];
+
+                content1.nowLeft = content1.targetLeft = content1.anchorLeft = - position.left;
+                content1.nowTop = content1.targetTop = content1.anchorTop =  - position.top;
+                content1.style.left = content1.nowLeft+"px";
+                content1.style.top = content1.nowTop+"px";
+
+                content2.nowLeft = content2.targetLeft = content2.anchorLeft = - position.left*0.6667;
+                content2.nowTop = content2.targetTop = content2.anchorTop =  - position.top*0.6667;
+                content2.style.left = content2.nowLeft+"px";
+                content2.style.top = content2.nowTop+"px";
+
+                content3.nowLeft = content3.targetLeft = content3.anchorLeft = - position.left*0.5;
+                content3.nowTop = content3.targetTop = content3.anchorTop =  - position.top*0.5;
+                content3.style.left = content3.nowLeft+"px";
+                content3.style.top = content3.nowTop+"px";
+            };
+
+            body.onmousemove = function(e) {
+                var mouseX,mouseY;
+                mouseX = e.pageX - scr.offsetLeft;
+                mouseY = e.pageY - scr.offsetTop;
+
+                content1.targetLeft = content1.anchorLeft - mouseX*0.1;
+                content1.targetTop = content1.anchorTop - mouseY*0.1;
+
+                content2.targetLeft = content2.anchorLeft - mouseX*0.1*0.6667;
+                content2.targetTop = content2.anchorTop - mouseY*0.1*0.6667;
+
+                content3.targetLeft = content3.anchorLeft - mouseX*0.1*0.5;
+                content3.targetTop = content3.anchorTop - mouseY*0.1*0.5;
+
+            };
+
+            change = function(idx) {
+                var position;
+                position = positions[idx];
+                content1.anchorLeft = - position.left;
+                content1.anchorTop = - position.top;
+                content2.anchorLeft = - position.left*0.6667;
+                content2.anchorTop = - position.top*0.6667;
+                content3.anchorLeft = - position.left*0.5;
+                content3.anchorTop = - position.top*0.5;
+            };
+
+            init(0);
+
+            setInterval(function(){
+                content1.nowLeft = content1.nowLeft 
+                                +(content1.targetLeft - content1.nowLeft) * 0.1;
+                content1.style.left = content1.nowLeft + "px";
+                content1.nowTop = content1.nowTop 
+                                +(content1.targetTop - content1.nowTop) * 0.1;
+                content1.style.top = content1.nowTop + "px";
+
+                content2.nowLeft = content2.nowLeft 
+                                +(content2.targetLeft - content2.nowLeft) * 0.1;
+                content2.style.left = content2.nowLeft + "px";
+                content2.nowTop = content2.nowTop 
+                                +(content2.targetTop - content2.nowTop) * 0.1;
+                content2.style.top = content2.nowTop + "px";
+
+                content3.nowLeft = content3.nowLeft 
+                                +(content3.targetLeft - content3.nowLeft) * 0.1;
+                content3.style.left = content3.nowLeft + "px";
+                content3.nowTop = content3.nowTop 
+                                +(content3.targetTop - content3.nowTop) * 0.1;
+                content3.style.top = content3.nowTop + "px";
+            },20);
+
+            //버튼 제어
+            $(".boxes div").click(function(){
+                $(".boxes div").removeClass("on");
+                $(this).addClass("on");
+                $(this).removeClass("on");
+                $(this).addClass("on");
+                
+            });
+
+        </script>
+    </body>
+</html>
